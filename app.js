@@ -8,6 +8,7 @@ const connectDB = require('./server/config/db')
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
+const cors = require('cors');
 
 const app = express();
 const PORT = 5000 || process.env.PORT;
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride('_method'));
+app.use(cors());
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -38,6 +40,7 @@ app.set('view engine', 'ejs');
 
 app.use('/' ,require('./server/routes/main'));
 app.use('/' ,require('./server/routes/admin'));
+app.use('/api', require('./server/routes/api'));
 
 app.listen(PORT, () => {
     console.log(`🚀 App listening on port ${PORT}`);
