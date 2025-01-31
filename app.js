@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const PORT = 5000 || process.env.PORT;
@@ -37,6 +38,7 @@ app.use(express.static("public"));
 //Templating engine
 app.use(expressLayout);
 app.set("layout", "./layouts/main");
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use("/", require("./server/routes/main"));
